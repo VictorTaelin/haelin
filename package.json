@@ -1,0 +1,27 @@
+{
+  "name": "voxera",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/main.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cp src/* docs; webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maiavictor/voxera.git"
+  },
+  "author": "Victor Maia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maiavictor/voxera/issues"
+  },
+  "homepage": "https://github.com/maiavictor/voxera#readme",
+  "devDependencies": {
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  }
+}
