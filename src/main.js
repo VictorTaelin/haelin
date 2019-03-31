@@ -51,12 +51,18 @@ window.onload = function() {
   // Sprites
   var sprites = [];
 
-  // Flooat
-  sprites.push(wlv.sprite({
-    col: 0xa0a0a0FF,
-    siz: [256, 256, 8],
-    pos: [0, 0, -4]
-  }));
+  // Floor
+  sprites.push(wlv.sprite({col: 0xa0a0a0FF, siz: [256, 256, 8], pos: [0, 0, -4]}));
+  //sprites.push(wlv.sprite({col: 0xa0a0a0FF, siz: [256, 256, 8], pos: [0, 0, -68]}));
+  sprites.push(wlv.sprite({col: 0xa0a0a0FF, siz: [8, 256, 64], pos: [-128, 0, -8+32]}));
+  sprites.push(wlv.sprite({col: 0xa0a0a0FF, siz: [256, 8, 64], pos: [0, -128, -8+32]}));
+  //sprites.push(wlv.sprite({col: 0xd0d0d0FF, siz: [16, 16, 64], pos: [120, 120, -32]}));
+  //sprites.push(wlv.sprite({col: 0xFF0000FF, siz: [16, 16, 64], pos: [120, 120-64, -32]}));
+  //sprites.push(wlv.sprite({col: 0xFF0000FF, siz: [16, 16, 64], pos: [120, 120-64*2, -32]}));
+  //sprites.push(wlv.sprite({col: 0xFF0000FF, siz: [16, 16, 64], pos: [120, 120-64*3, -32]}));
+  //sprites.push(wlv.sprite({col: 0xFF0000FF, siz: [16, 16, 64], pos: [120-64, 120, -32]}));
+  //sprites.push(wlv.sprite({col: 0xFF0000FF, siz: [16, 16, 64], pos: [120-64*2, 120, -32]}));
+  //sprites.push(wlv.sprite({col: 0xFF0000FF, siz: [16, 16, 64], pos: [120-64*3, 120, -32]}));
 
   // Main pillar / box
   sprites.push(wlv.sprite({loc: [ 0, 0, 64], siz: [24, 24, 24], pos: [0, 0, 12], vox: ([x,y,z]) => 0xff00000c}));
@@ -74,7 +80,7 @@ window.onload = function() {
   sprites.push(wlv.sprite({loc: [ 0,  64, 0], siz: [32, 32, 32], pos: [ 64,   0, 16], vox: ([x,y,z]) => (wlv.vec_dist([x,y,z], [16,16,16]) < 16 ? 0xFF0000FF : 0x00)}));
   sprites.push(wlv.sprite({loc: [ 0, 128, 0], siz: [32, 32, 32], pos: [  0,  64, 16], vox: ([x,y,z]) => (wlv.vec_dist([x,y,z], [16,16,16]) < 16 ? 0x00FF00FF : 0x00)}));
   sprites.push(wlv.sprite({loc: [64,  64, 0], siz: [32, 32, 32], pos: [-64,   0, 16], vox: ([x,y,z]) => (wlv.vec_dist([x,y,z], [16,16,16]) < 16 ? 0x0000FFFF : 0x00)}));
-  sprites.push(wlv.sprite({loc: [64, 128, 0], siz: [32, 32, 32], pos: [  0, -64, 16], vox: ([x,y,z]) => (wlv.vec_dist([x,y,z], [16,16,16]) < 16 ? 0x000000FF : 0x00)}));
+  //sprites.push(wlv.sprite({loc: [64, 128, 0], siz: [32, 32, 32], pos: [  0, -64, 16], vox: ([x,y,z]) => (wlv.vec_dist([x,y,z], [16,16,16]) < 16 ? 0x000000FF : 0x00)}));
 
   // Render loop
   function render() {
@@ -86,12 +92,12 @@ window.onload = function() {
       cam.pos = wlv.vec_add(cam.pos, wlv.vec_scale([0,1,0], (key.d - key.e) * 3.0));
       cam.pos = wlv.vec_add(cam.pos, wlv.vec_scale([0,0,1], (key.r - key.w) * 3.0));
     } else {
-      cam.rot = wlv.quat_mul(cam.rot, wlv.quat_rot_x((key.k - key.i) * Math.PI * 0.006));
-      cam.rot = wlv.quat_mul(cam.rot, wlv.quat_rot_y((key.l - key.j) * Math.PI * 0.006));
-      cam.rot = wlv.quat_mul(cam.rot, wlv.quat_rot_z((key.u - key.o) * Math.PI * 0.006));
-      cam.pos = wlv.vec_add(cam.pos, wlv.vec_scale(wlv.cam_tox(cam), (key.f - key.s) * 3.0));
-      cam.pos = wlv.vec_add(cam.pos, wlv.vec_scale(wlv.cam_toy(cam), (key.r - key.w) * 3.0));
-      cam.pos = wlv.vec_add(cam.pos, wlv.vec_scale(wlv.cam_toz(cam), (key.e - key.d) * 3.0));
+      cam.rot = wlv.quat_mul(cam.rot, wlv.quat_rot_x((key.k - key.i) * Math.PI * 0.009));
+      cam.rot = wlv.quat_mul(cam.rot, wlv.quat_rot_y((key.l - key.j) * Math.PI * 0.009));
+      cam.rot = wlv.quat_mul(cam.rot, wlv.quat_rot_z((key.u - key.o) * Math.PI * 0.009));
+      cam.pos = wlv.vec_add(cam.pos, wlv.vec_scale(wlv.cam_tox(cam), (key.f - key.s) * 8.0));
+      cam.pos = wlv.vec_add(cam.pos, wlv.vec_scale(wlv.cam_toy(cam), (key.r - key.w) * 8.0));
+      cam.pos = wlv.vec_add(cam.pos, wlv.vec_scale(wlv.cam_toz(cam), (key.e - key.d) * 8.0));
     }
 
     // Title
@@ -99,15 +105,28 @@ window.onload = function() {
 
     // Lights
     var lights = [];
-    for (var i = 0; i < 4; ++i) {
-      lights.push({pos: [64 * Math.cos(time * (i + 1)), 64 * Math.sin(time * (i + 1)), 64], pow: 512.0});
+    for (var i = 0; i < 1; ++i) {
+      lights.push({pos: [64 * Math.cos(time * (i + 1)), 64 * Math.sin(time * (i + 1)), 64], pow: 1600.0});
     }
-    if (time % 6 > 4) {
-      var pow = 256.0 * 256.0 * 4.0 * Math.min(1.0 - (time % 6 - 5), 1.0);
-      lights.push({pos: [256, 0, 128], pow});
+    if (time % 12 > 8) {
+      var pow = 256.0 * 256.0 * 2.0;
+      var pow = time % 12 > 10 ? pow * (1 - (time % 12 - (12 - 2)) / 2) : pow;
+      lights.push({pos: [256, -128-64, 128], pow});
     }
 
-    wlv.render({canvas, lights, camera: cam, sprites, debug: 1});
+    // Sprites
+    var new_sprites = sprites.slice(0);
+    new_sprites.push(wlv.sprite({loc: [128, 128, 0], siz: [32, 32, 32], pos: [ 0, -64, 16], vox: ([x,y,z]) => {
+      var dist = wlv.vec_dist([x,y,z], [16,16,16]);
+      var srad = 16;
+      var r = 128 + Math.cos(time) * 64;
+      var g = 128 + Math.cos(time * 12 + z) * 128;
+      var b = 128 + Math.cos(time * 5 + y) * 64;
+      var c = (r << 16) + (g << 16) + (b << 8) + 0xFF;
+      return dist < srad ? c : 0x00;
+    }}));
+
+    wlv.render({canvas, lights, camera: cam, sprites: new_sprites, debug: 0});
     window.requestAnimationFrame(render);
   }
   window.requestAnimationFrame(render);
